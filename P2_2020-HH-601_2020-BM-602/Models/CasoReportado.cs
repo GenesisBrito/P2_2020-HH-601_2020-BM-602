@@ -2,18 +2,18 @@
 {
     public class CasoReportado
     {
-        public int Id { get; set; }
-        public int DepartamentoId { get; set; }
-        public int GeneroId { get; set; }
-        public int NumeroCasos { get; set; }
-        public int NumeroCasosRecuperados { get; set; }
-        public int NumeroCasosFallecidos { get; set; }
-        public DateTime FechaRegistro { get; set; }
+        public int Id_CasoReportado { get; set; }
+        public int Departamento_Id { get; set; }
+        public int Genero_Id { get; set; }
+        public int Numero_Casos { get; set; }
+        public int NumeroCasos_Recuperados { get; set; }
+        public int NumeroCasos_Fallecidos { get; set; }
+        public DateTime Fecha_Registro { get; set; }
 
         // Relación con la tabla Departamentos
-        public Departamento Departamento { get; set; }
+        public Departamento? Departamento { get; set; }
 
         // Relación con la tabla Generos
-        public Genero Genero { get; set; }
+        public Genero? Genero { get; set; }
     }
 }

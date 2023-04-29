@@ -1,78 +1,79 @@
-﻿@model IEnumerable<registroCovid>.Models.<CasoReportado>
-{
-    ViewData["Title"] = "Registro de Covid";
-}
-
-<h2></h2>
-
-<!-- El siguiente formulario es para llevar el registro de casos reportados de Covid por departamento y genero-->
-<div class="row">
-    <div class="col-md-12">
-        <h3>Reportar casos</h3>
-        <form method="post" asp-controller="Home" asp-action="GuardarRegistro">
-            <div class="form-group">
-                <label for="departamento">Departamento:</label>
-                <select class="form-control" id="departamento" name="departamento">
-                    @foreach (var departamento in ViewBag.Departamentos)
-                    {
-                        <option value="@departamento.IdDepartamento">@departamento.NombreDepartamento</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="genero">Género:</label>
-                <select class="form-control" id="genero" name="genero">
-                    @foreach (var genero in ViewBag.Generos)
-                    {
-                        <option value="@genero.IdGenero">@genero.NombreGenero</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="confirmados"># Casos Confirmados:</label>
-                <input type="number" class="form-control" id="confirmados" name="confirmados" required>
-            </div>
-            <div class="form-group">
-                <label for="recuperados"># Casos Recuperados:</label>
-                <input type="number" class="form-control" id="recuperados" name="recuperados" required>
-            </div>
-            <div class="form-group">
-                <label for="fallecidos"># Casos Fallecidos:</label>
-                <input type="number" class="form-control" id="fallecidos" name="fallecidos" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Registro</button>
-        </form>
-    </div>
+﻿<div class="text-center">
+    <h1>Registro de Covid</h1>
+    <h6>
+        El siguiente formulario es para llevar el registro de casos reportados de <br />
+        Covid por departamento y genero.
+    </h6>
 </div>
-
-<hr />
-
-<!-- Tabla de casos reportados -->
-<div class="row">
-    <div class="col-md-12">
-        <h3>Casos Reportados</h3>
+<br />
+<form asp-action="crearCaso">
+    <h4>Reportar casos</h4>
+    <div class="form-group row mb-4">
+        <div class="col-sm-4">
+            @Html.Label("lblDepartamento", "Departamento")
+        </div>
+        <div class="col-sm-4">
+            @Html.Label("lblGenero", "Genero")
+        </div>
+        <div class="form-group row mb-4">
+            <div class="col-sm-4">
+                @Html.DropDownList("Id_departamento", ViewData["lista_Departamentos"] as SelectList,"Seleccione un departamento", new{@class="form-control"} )
+            </div>
+            <div class="col-sm-4">
+                @Html.DropDownList("Id_Genero", ViewData["lista_Generos"] as SelectList, "Seleccione su genero", new {@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group row mb-4">
+            <div class="col-sm-4">
+                @Html.Label("lblCasosConfirmados", "Casos Confirmados")
+            </div>
+            <div class="col-sm-4">
+                @Html.Label("lblNumeroDeRecuperados", "Número de Recuperados")
+            </div>
+            <div class="col-sm-4">
+                @Html.Label("lblNumeroDeFallecidos", "Número de Fallecidos")
+            </div>
+            <div class="form-group row mb-4">
+                <div class="col-sm-4">
+                    @Html.TextBox("casos_confirmados", "", new {@class="form-control"})
+                </div>
+                <div class="col-sm-4">
+                    @Html.TextBox("casos_recuperados", "", new {@class="form-control"})
+                </div>
+                <div class="col-sm-4">
+                    @Html.TextBox("casos_fallecidos", "", new {@class="form-control"})
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mb-4">
+            <div class="col-sm-2"></div>
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-success" value="Guardar Registro" />
+            </div>
+        </div>
         <table class="table table-striped">
             <thead>
+                <tr>Casos Reportados</tr>
                 <tr>
                     <th>Departamento</th>
-                    <th>Género</th>
-                    <th>Casos Confirmados</th>
-                    <th>Casos Recuperados</th>
-                    <th>Casos Fallecidos</th>
+                    <th>Genero</th>
+                    <th>Confirmados</th>
+                    <th>Recuperados</th>
+                    <th>Fallecidos</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var caso in Model)
+                @foreach (var casos in (IEnumerable<dynamic>)ViewData["Lista_Casos"])
                 {
                     <tr>
-                        <td>@caso.NombreDepartamento</td>
-                        <td>@caso.NombreGenero</td>
-                        <td>@caso.NumConfirmados</td>
-                        <td>@caso.NumRecuperados</td>
-                        <td>@caso.NumFallecidos</td>
+                        <td>@casos.departamento</td>
+                        <td>@casos.genero</td>
+                        <td>@casos.confirmados</td>
+                        <td>@casos.recuperados</td>
+                        <td>@casos.fallecidos</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>
+</form>
